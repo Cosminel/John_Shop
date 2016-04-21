@@ -34,9 +34,6 @@ public class AddToCart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		
-		if (action.equals("add")) {
-			addProduct(request, response);
-		}
 		if (action.equals("remove"))
 		{
 			removeProduct(request,response);
@@ -57,7 +54,6 @@ public class AddToCart extends HttpServlet {
 		produsx.setPrice(Float.parseFloat (request.getParameter("price")));
 		produsx.setDescription(request.getParameter("description"));
 	
-		System.out.println(session.getAttribute("products"));
 		if (session.getAttribute("products")!=null)
 			productList = (List<ProductDTO>)session.getAttribute("products");
 		else
@@ -69,9 +65,7 @@ public class AddToCart extends HttpServlet {
 
 //		session.setAttribute("noofproducts", cartFacade.getAllProducts().size());
 		session.setAttribute("products", productList);
-		
-
-		//response.sendRedirect(request.getContextPath() + "/index.jsp");
+		response.sendRedirect(request.getContextPath() + "/index.jsp");
 	}
 	
 	private void removeProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -103,8 +97,12 @@ public class AddToCart extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String action = request.getParameter("action");
+		
+		if (action.equals("add")) {
+			addProduct(request, response);
+		}
+
 	}
 
 }
