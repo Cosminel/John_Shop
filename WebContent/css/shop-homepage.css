@@ -1,0 +1,52 @@
+body {
+    padding-top: 70px;  
+}
+
+.slide-image {
+    width: 100%;
+}
+
+.carousel-holder {
+    margin-bottom: 30px;
+}
+
+.carousel-control,
+.item {
+    border-radius: 4px;
+}
+
+.caption {
+    height: 130px;
+    overflow: hidden;
+}
+
+.caption h4 {
+    white-space: nowrap;
+}
+
+
+
+.thumbnail {
+    padding: 0;
+    
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+    color: #333;
+}
+
+h4.pull-right {
+	color : red;
+}
+#cos{
+    min-width: 150px;
+    padding: 2px 2px 0;
+    overflow:hidden;
+}
+#button-cos
+{
+	position: right;
+    top: 50%;
+    margin-top: 15px;
+}
