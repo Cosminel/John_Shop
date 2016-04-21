@@ -55,6 +55,7 @@ public class UserDAOBean {
 				user.setUser(resultSet.getString("user"));
 				user.setEmail(resultSet.getString("email"));
 				user.setPassword(resultSet.getString("password"));
+				user.setRole(resultSet.getInt("role"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -17,6 +17,7 @@ public final class UserMapper {
 		model.setName(entity.getName());
 		model.setPassword(entity.getPassword());
 		model.setUser(entity.getUser());
+		model.setRole(entity.getRole());
 		return model;
 	}
 	
@@ -30,6 +31,7 @@ public final class UserMapper {
 		entity.setName(model.getName());
 		entity.setPassword(model.getPassword());
 		entity.setUser(model.getUser());
+		entity.setRole(model.getRole());
 		return entity;
 		
 		

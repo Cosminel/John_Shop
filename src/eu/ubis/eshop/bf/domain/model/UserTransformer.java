@@ -17,7 +17,7 @@ public final class UserTransformer {
 		dto.setUser(model.getUser());
 		dto.setPassword(model.getPassword());
 		dto.setName(model.getName());
-		dto.setRole(1);
+		dto.setRole(model.getRole());
 		return dto;
 	}
 	
@@ -30,6 +30,7 @@ public final class UserTransformer {
 		model.setName(dto.getName());
 		model.setPassword(dto.getPassword());
 		model.setUser(dto.getUser());
+		model.setRole(dto.getRole());
 		
 		return model;
 	}

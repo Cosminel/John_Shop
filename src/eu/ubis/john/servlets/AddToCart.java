@@ -38,35 +38,12 @@ public class AddToCart extends HttpServlet {
 		{
 			removeProduct(request,response);
 		}
+		if (action.equals("add")) {
+			addProduct(request, response);
+		}
 			
 	}
 
-
-
-	private void addProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// TODO Auto-generated method stub
-		List<ProductDTO> productList ;
-		HttpSession session = request.getSession();
-		ProductDTO produsx = new ProductDTO();
-		produsx.setName(request.getParameter("name"));
-		ProductDTO y= (ProductDTO)request.getAttribute("prod");
-		produsx.setImagePath(request.getParameter("img"));
-		produsx.setPrice(Float.parseFloat (request.getParameter("price")));
-		produsx.setDescription(request.getParameter("description"));
-	
-		if (session.getAttribute("products")!=null)
-			productList = (List<ProductDTO>)session.getAttribute("products");
-		else
-			productList = new ArrayList<ProductDTO>();
-	
-
-		if (!productList.contains(produsx))
-			productList.add(produsx);
-
-//		session.setAttribute("noofproducts", cartFacade.getAllProducts().size());
-		session.setAttribute("products", productList);
-		response.sendRedirect(request.getContextPath() + "/index.jsp");
-	}
 	
 	private void removeProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
@@ -92,17 +69,40 @@ public class AddToCart extends HttpServlet {
 		session.setAttribute("products", productList);	
 		response.sendRedirect(request.getContextPath() + "/shopping-cart.jsp");
 	}
+	
+	private void addProduct(HttpServletRequest request, HttpServletResponse response) throws IOException 
+	{
+		// TODO Auto-generated method stub
+		List<ProductDTO> productList ;
+		HttpSession session = request.getSession();
+		ProductDTO produsx = new ProductDTO();
+		produsx.setName(request.getParameter("name"));
+		produsx.setImagePath(request.getParameter("img"));
+		produsx.setPrice(Float.parseFloat (request.getParameter("price")));
+		produsx.setDescription(request.getParameter("description"));
+	
+		if (session.getAttribute("products")!=null)
+			productList = (List<ProductDTO>)session.getAttribute("products");
+		else
+			productList = new ArrayList<ProductDTO>();
+	
+
+		if (!productList.contains(produsx))
+			productList.add(produsx);
+
+		session.setAttribute("products", productList);
+		response.sendRedirect(request.getContextPath() + "/index.jsp");
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		
-		if (action.equals("add")) {
-			addProduct(request, response);
-		}
-
+		
+	
 	}
+
 
 }

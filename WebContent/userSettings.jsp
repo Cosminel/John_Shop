@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+        <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>John's shop</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>User Settings</title>
 	
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/shop-homepage.css" rel="stylesheet">
@@ -49,12 +48,12 @@
 	               	<li class="dropdown">
            				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><c:out value="${user.user}"></c:out><span class="caret"></span></a>
 	               		<ul class="dropdown-menu dropdown-cart" role="menu">
-	               			<li><a class="text-center" href="userSettings.jsp">Settings</a></li>
+	               			<li><a class="text-center" href="shopping-cart.jsp">Settings</a></li>
 	               			<li>
 	                			<form action="<%=response.encodeURL("LogoutServlet") %>"  method="post">
                     				<button type="submit" class="btn btn-default center-block">LogOut</button>
                 				</form>
-	               			 </li>
+	               			 </li>	               		
 	               		</ul>	
 	                </li>
 	                
@@ -83,15 +82,95 @@
 			            </div>
 			          </ul>
 			        </li>
-      			</ul>
-                
+      			</ul> 
             </div>
             <!-- /.navbar-collapse -->
-
         </div>
         <!-- /.container -->
-        
     </nav>
+    
+    <div class="container">
+    <h1>Edit Profile</h1>
+  	<hr>
+	<div class="row">
+      <!-- edit form column -->
+      <div class="col-md-6 personal-info">
+        <h3>Personal info</h3>
+        
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">First name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="<c:out value="${user.firstName}"/>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Last name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="<c:out value="${user.name}"/>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Address:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="<c:out value="${user.address }"/>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="<c:out value="${user.email }"/>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Username:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="<c:out value="${user.user }"/>" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="button" class="btn btn-primary" value="Save Changes">
+              <span></span>
+              <input type="reset" class="btn btn-default" value="Cancel">
+            </div>
+          </div>
+        </form>
+      </div>
+                 <div class="col-md-6">
+         <h3>Reset your password</h3>
+      		 <form class="form-horizontal" role="form">
+      		  <div class="form-group">
+            <label class="col-md-3 control-label">Old password:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="password" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">New password:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="password" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Confirm new password:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="password" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="button" class="btn btn-primary" value="Reset password">
+            </div>
+          </div>
+          </form>
+        </div>
+  </div>
+</div>
+    
+    
 </body>
 	<script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>

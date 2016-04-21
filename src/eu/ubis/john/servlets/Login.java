@@ -56,7 +56,7 @@ public class Login extends HttpServlet {
 	    	 {
 	    	 UserDTO currentUser = new UserDTO();
 	    	 currentUser = userFacade.getCurrentUser();
-	    	 session.setAttribute("user", currentUser.getUser());
+	    	 session.setAttribute("user", currentUser);
 	    	 String encodedURL = response.encodeRedirectURL(request.getContextPath() + "/home.jsp");
 	    	 response.sendRedirect(encodedURL);
 	    	 }
