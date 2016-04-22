@@ -43,10 +43,11 @@ public class Register extends HttpServlet {
 		dto.setUser((String)request.getParameter("username"));
 		dto.setPassword((String)request.getParameter("password"));
 		dto.setEmail((String)request.getParameter("email"));
+		dto.setRole(0);
 		userFacade.createUser(dto);
 		
-		 String encodedURL = response.encodeRedirectURL(request.getContextPath() + "/index.jsp");
-    	 response.sendRedirect(encodedURL);
+		String encodedURL = response.encodeRedirectURL(request.getContextPath() + "/index.jsp");
+    	response.sendRedirect(encodedURL);
 		
 	}
 	

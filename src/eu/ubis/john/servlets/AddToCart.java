@@ -51,11 +51,10 @@ public class AddToCart extends HttpServlet {
 		ProductDTO produsx = new ProductDTO();
 		produsx.setName(request.getParameter("name"));
 		ProductDTO aux=null ;
-		if (session.getAttribute("products")!=null)
+		if (session.getAttribute("shoppingcart")!=null)
 			{
-				productList = (List<ProductDTO>)session.getAttribute("products");
-				System.out.println(productList.get(0).getName());
-				System.out.println(produsx.getName());
+				productList = (List<ProductDTO>)session.getAttribute("shoppingcart");
+
 				for(ProductDTO p: productList)
 				{
 					if (p.getName().equals(produsx.getName()))
@@ -66,7 +65,7 @@ public class AddToCart extends HttpServlet {
 				productList.remove(aux);
 			}
 
-		session.setAttribute("products", productList);	
+		session.setAttribute("shoppingcart", productList);	
 		response.sendRedirect(request.getContextPath() + "/shopping-cart.jsp");
 	}
 	
@@ -81,8 +80,8 @@ public class AddToCart extends HttpServlet {
 		produsx.setPrice(Float.parseFloat (request.getParameter("price")));
 		produsx.setDescription(request.getParameter("description"));
 	
-		if (session.getAttribute("products")!=null)
-			productList = (List<ProductDTO>)session.getAttribute("products");
+		if (session.getAttribute("shoppingcart")!=null)
+			productList = (List<ProductDTO>)session.getAttribute("shoppingcart");
 		else
 			productList = new ArrayList<ProductDTO>();
 	
@@ -90,7 +89,7 @@ public class AddToCart extends HttpServlet {
 		if (!productList.contains(produsx))
 			productList.add(produsx);
 
-		session.setAttribute("products", productList);
+		session.setAttribute("shoppingcart", productList);
 		response.sendRedirect(request.getContextPath() + "/index.jsp");
 	}
 

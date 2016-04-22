@@ -32,4 +32,11 @@ public class UserRepositoryBean {
 		
 	}
 	
+	public void editAccount(User model)
+	{
+		UserEntity entity = UserMapper.modelToEntity(model);
+		userDAOBean.updateUser(entity);
+	}
+	
+	
 }

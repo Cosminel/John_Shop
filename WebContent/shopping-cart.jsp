@@ -25,7 +25,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${products}" var="product">
+						<c:forEach items="${shoppingcart}" var="product">
 							<tr>
 								<td data-th="Product">
 									<div class="row">

@@ -48,7 +48,12 @@
 	               	<li class="dropdown">
            				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><c:out value="${user.user}"></c:out><span class="caret"></span></a>
 	               		<ul class="dropdown-menu dropdown-cart" role="menu">
-	               			<li><a class="text-center" href="shopping-cart.jsp">Settings</a></li>
+	               			<li><a class="text-center" href="userSettings.jsp">Settings</a></li>
+	               			<c:if test="${user.role==1 }">
+		               			<li>
+		               				<a class="text-center" href="AdminServlet?action=getProducts">Admin Panel</a>
+		               			 </li>
+	               			 </c:if>
 	               			<li>
 	                			<form action="<%=response.encodeURL("LogoutServlet") %>"  method="post">
                     				<button type="submit" class="btn btn-default center-block">LogOut</button>
@@ -61,7 +66,7 @@
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> ${fn:length(products) }- Items<span class="caret"></span></a>
 			          <ul class="dropdown-menu dropdown-cart" role="menu">
 			           <div class="col-lg-12 ">
-			              <c:forEach items="${products}" var="product">
+			              <c:forEach items="${shoppingcart}" var="product">
 			              <li>
 			                  <span class="item">
 			                    <span class="item-left">
@@ -97,72 +102,72 @@
       <div class="col-md-6 personal-info">
         <h3>Personal info</h3>
         
-        <form class="form-horizontal" role="form">
+        <form class="form-horizontal" role="form" action="UserSettingsServlet?action=saveProfile" method="post">
           <div class="form-group">
             <label class="col-lg-3 control-label">First name:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="<c:out value="${user.firstName}"/>">
+              <input class="form-control" name="firstname" type="text" value="<c:out value="${user.firstName}"/>">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Last name:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="<c:out value="${user.name}"/>">
+              <input class="form-control" name="lastname" type="text" value="<c:out value="${user.name}"/>">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Address:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="<c:out value="${user.address }"/>">
+              <input class="form-control" name="address" type="text" value="<c:out value="${user.address }"/>">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Email:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" value="<c:out value="${user.email }"/>">
+              <input class="form-control" name="email" type="email" value="<c:out value="${user.email }"/>">
             </div>
           </div>
           <div class="form-group">
             <label class="col-md-3 control-label">Username:</label>
             <div class="col-md-8">
-              <input class="form-control" type="text" value="<c:out value="${user.user }"/>" readonly>
+              <input class="form-control" name="username" type="text" value="<c:out value="${user.user }"/>" readonly>
             </div>
           </div>
           <div class="form-group">
             <label class="col-md-3 control-label"></label>
             <div class="col-md-8">
-              <input type="button" class="btn btn-primary" value="Save Changes">
+              <input type="submit"  class="btn btn-primary" value="Save Changes">
               <span></span>
-              <input type="reset" class="btn btn-default" value="Cancel">
+              <input type="reset" onClick="location.href='home.jsp'" class="btn btn-default" value="Cancel">
             </div>
           </div>
         </form>
       </div>
                  <div class="col-md-6">
          <h3>Reset your password</h3>
-      		 <form class="form-horizontal" role="form">
+      		 <form class="form-horizontal" role="form" action="UserSettingsServlet?action=resetPassword" method="post">
       		  <div class="form-group">
             <label class="col-md-3 control-label">Old password:</label>
             <div class="col-md-8">
-              <input class="form-control" type="password" value="">
+              <input class="form-control" name ="oldpassword" type="password" value="" required>
             </div>
           </div>
           <div class="form-group">
             <label class="col-md-3 control-label">New password:</label>
             <div class="col-md-8">
-              <input class="form-control" type="password" value="">
+              <input class="form-control" name="newpassword" type="password" value="" required>
             </div>
           </div>
           <div class="form-group">
             <label class="col-md-3 control-label">Confirm new password:</label>
             <div class="col-md-8">
-              <input class="form-control" type="password" value="">
+              <input class="form-control" name="confirmnewpassword" type="password" value="" required>
             </div>
           </div>
           <div class="form-group">
             <label class="col-md-3 control-label"></label>
             <div class="col-md-8">
-              <input type="button" class="btn btn-primary" value="Reset password">
+              <input type="submit" class="btn btn-primary" value="Reset password">
             </div>
           </div>
           </form>

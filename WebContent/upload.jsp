@@ -97,6 +97,8 @@
     <script src="js/bootstrap.min.js"></script>
 
 
+ <form action="DemoServlet?action=addProduct" method="post"> <input type="text" name="name"> <input type="number" name="price"> <input type="text" name="description"> <input type="submit" value="Submit"> </form>
+
 <h3>File Upload:</h3>
 Select a file to upload: <br />
 <form action="upload" method="post" enctype="multipart/form-data">

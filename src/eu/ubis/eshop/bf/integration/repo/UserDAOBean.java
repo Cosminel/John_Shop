@@ -8,9 +8,9 @@ import eu.ubis.eshop.bf.integration.model.UserEntity;
 
 public class UserDAOBean {
 	private static final String GET_USER_BY_ID = "SELECT * FROM user ORDER BY id=?";
-	private static final String CREATE_USER = "INSERT INTO \"USER\" (\"NAME\",firstname,address,\"USER\",password,email) values (?,?,?,?,?,?)";
+	private static final String CREATE_USER = "INSERT INTO \"USER\" (\"NAME\",firstname,address,\"USER\",password,email,role) values (?,?,?,?,?,?,?)";
 	private static final String GET_USER_BY_NAME_PASSWORD = "SELECT * FROM \"USER\" WHERE \"USER\"=? and password=?";
-	
+	private static final String UPDATE_USER ="UPDATE \"USER\" SET \"NAME\" = ?, firstname=? , address=? , email=? , password=? , role=?  WHERE \"USER\"=?";
 	public UserEntity getUserById(int userId)
 	{
 		Connection con = ConnectionHelperClass.getMysqlConnection();
@@ -66,7 +66,24 @@ public class UserDAOBean {
 	
 	public void updateUser(UserEntity user)
 	{
-		//TODO
+		Connection con = ConnectionHelperClass.getMysqlConnection();
+	
+		PreparedStatement prepareStatement;
+		try {
+			prepareStatement = con.prepareStatement(UPDATE_USER);
+			prepareStatement.setString(1, user.getName());
+			prepareStatement.setString(2, user.getFirstName());
+			prepareStatement.setString(3, user.getAddress());
+			prepareStatement.setString(4, user.getEmail());
+			prepareStatement.setString(5, user.getPassword());
+			prepareStatement.setInt(6, user.getRole());
+			prepareStatement.setString(7, user.getUser());
+			prepareStatement.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void deleteUser(int userID)
@@ -86,6 +103,7 @@ public class UserDAOBean {
 			prepareStatement.setString(4, user.getUser());
 			prepareStatement.setString(5, user.getPassword());
 			prepareStatement.setString(6, user.getEmail());
+			prepareStatement.setInt(7, user.getRole());
 			prepareStatement.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

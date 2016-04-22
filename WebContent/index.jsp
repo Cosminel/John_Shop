@@ -22,9 +22,7 @@
 	if(session.getAttribute("user") != null)
 	{
 	    response.sendRedirect("home.jsp");
-	    
 	}
-	
 	%>
 	
 	<jsp:useBean id="index" class="eu.ubis.john.servlets.Index"></jsp:useBean>
@@ -57,9 +55,9 @@
 
                 <ul class="nav navbar-nav navbar-right">
                      <li class="dropdown">
-			          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> ${fn:length(products) }- Items<span class="caret"></span></a> 
+			          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> ${fn:length(shoppingcart) }- Items<span class="caret"></span></a> 
 		          		<ul id="cos" class="dropdown-menu dropdown-cart col-lg-12 " role="menu">	              		
-		              		<c:forEach items="${products}" var="product">
+		              		<c:forEach items="${shoppingcart}" var="product">
 		             			 <li class="col-lg-12">
 		                 			 <span class="item">
 										<span class="item-right">
@@ -120,7 +118,7 @@
                                 <form id="ajax-login-form" action=<%=response.encodeURL("LoginServlet?action=login") %> method="post" role="form" autocomplete="off">
                                     <div class="form-group">
                                         <label for="username">Username</label>
-                                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" autocomplete="off" required>
+                                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" autocomplete="on" required>
                                     </div>
 
                                     <div class="form-group">

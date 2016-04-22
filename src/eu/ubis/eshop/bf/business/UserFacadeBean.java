@@ -36,9 +36,10 @@ public class UserFacadeBean implements UserFacade {
 	}
 
 	@Override
-	public void editAccount(int userId) {
-		// TODO Auto-generated method stub
-		
+	public void editAccount(UserDTO user) {
+		User model = new User();
+		model = UserTransformer.dtoToModel(user);
+		userRepository.editAccount(model);
 	}
 
 	@Override

@@ -71,7 +71,7 @@ public class Index extends HttpServlet {
 		List<ProductDTO> products = productFacade.getAllProducts();
 		List<String> categories = productFacade.getAllCategories();
 		List<String> subcategories = productFacade.getAllSubcategories();
-
+		
 		session.setAttribute("products", products);
 		session.setAttribute("categories", categories);
 		session.setAttribute("subcategories", subcategories);

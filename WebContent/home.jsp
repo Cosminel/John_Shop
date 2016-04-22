@@ -19,7 +19,6 @@
 	    response.sendRedirect("index.jsp");
 	    
 	}
-	
 	%>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -50,19 +49,25 @@
            				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><c:out value="${user.user}"></c:out><span class="caret"></span></a>
 	               		<ul class="dropdown-menu dropdown-cart" role="menu">
 	               			<li><a class="text-center" href="userSettings.jsp">Settings</a></li>
+	               			<c:if test="${user.role==1 }">
+		               			<li>
+		               				<a class="text-center" href="AdminServlet?action=getProducts">Admin Panel</a>
+		               			 </li>
+	               			 </c:if>
 	               			<li>
 	                			<form action="<%=response.encodeURL("LogoutServlet") %>"  method="post">
                     				<button type="submit" class="btn btn-default center-block">LogOut</button>
                 				</form>
 	               			 </li>
+
 	               		</ul>	
 	                </li>
 	                
 			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> ${fn:length(products) }- Items<span class="caret"></span></a>
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> ${fn:length(shoppingcart) }- Items<span class="caret"></span></a>
 			          <ul class="dropdown-menu dropdown-cart" role="menu">
 			           <div class="col-lg-12 ">
-			              <c:forEach items="${products}" var="product">
+			              <c:forEach items="${shoppingcart}" var="product">
 			              <li>
 			                  <span class="item">
 			                    <span class="item-left">
