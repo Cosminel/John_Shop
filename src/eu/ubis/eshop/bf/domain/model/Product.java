@@ -8,6 +8,7 @@ public class Product {
 	private String subcategory;
 	private float price;
 	private String imagePath;
+	private int quantity;
 
 	public String getImagePath() {
 		return imagePath;
@@ -63,6 +64,14 @@ public class Product {
 
 	public void setPrice(float price) {
 		this.price = price;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 }

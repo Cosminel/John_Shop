@@ -15,6 +15,8 @@ public class Transformer {
 		model.setCategory(dto.getCategory());
 		model.setSubcategory(dto.getSubcategory());
 		model.setImagePath(dto.getImagePath());
+		model.setProductId(dto.getProductId());
+		model.setQuantity(dto.getQuantity());
 		return model;
 	}
 
@@ -25,6 +27,8 @@ public class Transformer {
 		dto.setPrice(model.getPrice());
 		dto.setCategory(model.getCategory());
 		dto.setSubcategory(model.getSubcategory());
+		dto.setProductId(model.getProductId());
+		dto.setQuantity(model.getQuantity());
 		if (model.getImagePath()!=null)
 		dto.setImagePath(model.getImagePath());
 		else

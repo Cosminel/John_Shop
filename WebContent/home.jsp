@@ -11,7 +11,12 @@
 	
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/shop-homepage.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
+	<script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 </head>
+<jsp:useBean id="index" class="eu.ubis.john.servlets.Index"></jsp:useBean>
 <body>
 	<%
 	if(session.getAttribute("user") == null)
@@ -71,10 +76,10 @@
 			              <li>
 			                  <span class="item">
 			                    <span class="item-left">
-			                        <img src="<c:out value="${product.imagePath }"/>" class="img-responsive"  width="50" height="50" alt="" />
+			                        <img src="<c:out value="${product.key.imagePath }"/>" class="img-responsive"  width="50" height="50" alt="" />
 			                        <span class="item-info">
-			                            <span><c:out value="${product.name}" /></span>
-			                            <span><c:out value="${product.price}"/>RON</span>
+			                            <span><c:out value="${product.key.name}" /></span>
+			                            <span><c:out value="${product.key.price}"/>RON</span>
 			                        </span>
 			                    </span>
 			                    <span class="item-right">
@@ -97,7 +102,23 @@
         <!-- /.container -->
         
     </nav>
+<!-- ------------------------------------------------------------------------ --> 
+
+	<div class="container">
+		<div class="row">	
+    		<div class="col-md-3">
+    				<p></p>
+					<c:forEach items="${index.getAllCategories()}" var="item">
+    			 		<div class="list-group">
+    			 		<a href="#" class="list-group-item category"><strong> <c:out value="${item}"/> </strong></a>
+    			 			<c:forEach items="${index.getSubcategoriesByCategoryName(item)}" var="subcategory">
+    			 					<a href="#" class="list-group-item category"> <c:out value="${subcategory}"/></a>		 				
+    			 			</c:forEach>
+    			 		</div>		
+					</c:forEach>	
+    		</div>    	
+    	</div>
+	</div>
 </body>
-	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+	
 </html>

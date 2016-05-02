@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.ubis.eshop.bf.domain.model.Product;
+import eu.ubis.eshop.bf.domain.model.Transformer;
 import eu.ubis.eshop.bf.integration.model.Mapper;
 import eu.ubis.eshop.bf.integration.model.ProductEntity;
 import eu.ubis.eshop.bf.integration.repo.ProductDAOBean;
+import eu.ubis.eshop.bfcl.ProductDTO;
 
 public class ProductRepositoryBean {
 
@@ -51,6 +53,14 @@ public class ProductRepositoryBean {
 		entity.setCategory(categoryId);
 		entity.setSubcategory(subcategoryId);
 
-		productDAOBean.saveProduct(entity);
+		productDAOBean.addProduct(entity);
+	}
+	
+	public ProductDTO getProductbyId(int productId) 
+	{
+		ProductEntity entity = productDAOBean.getProductbyId(productId);
+		Product model = Mapper.entityToModel(entity);
+		ProductDTO dto = Transformer.modelToDto(model);
+		return dto;
 	}
 }

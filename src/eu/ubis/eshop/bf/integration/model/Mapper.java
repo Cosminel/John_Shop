@@ -14,6 +14,7 @@ public final class Mapper {
 		model.setDescription(entity.getDescription());
 		model.setPrice(entity.getPrice());
 		model.setImagePath(entity.getImagePath());
+		model.setQuantity(entity.getQuantity());
 		return model;
 	}
 
@@ -24,6 +25,7 @@ public final class Mapper {
 		entity.setDescription(model.getDescription());
 		entity.setPrice(model.getPrice());
 		entity.setImagePath(model.getImagePath());
+		entity.setQuantity(model.getQuantity());
 		return entity;
 	}
 

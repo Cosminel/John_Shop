@@ -15,6 +15,9 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/shop-homepage.css" rel="stylesheet">
 	<link href="css/animate.css" rel="stylesheet">
+	<script  src="js/product_filter.js"></script>	
+	<script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -26,7 +29,7 @@
 	%>
 	
 	<jsp:useBean id="index" class="eu.ubis.john.servlets.Index"></jsp:useBean>
-	<jsp:useBean id="cart" class="eu.ubis.john.servlets.AddToCart"></jsp:useBean>
+	<jsp:useBean id="cart" class="eu.ubis.john.servlets.ShoppingCart"></jsp:useBean>
 	
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -64,10 +67,10 @@
 		                        			<button class="btn btn-xs btn-danger pull-right" id="button-cos">x</button>
 		                   				 </span>
 		                    			<span class="item-left">
-		                       				 <img src="<c:out value="${product.imagePath }"/>" class="img-rounded" height="50" max-width="50"  alt="" />
+		                       				 <img src="<c:out value="${product.key.imagePath }"/>" class="img-rounded" height="50" max-width="50"  alt="" />
 			                        		<span class="item-info">
-			                            		<span><c:out value="${product.name}" /></span>
-			                          	  		<span><c:out value="${product.price}"/>RON</span>
+			                            		<span><c:out value="${product.key.name}" /></span>
+			                          	  		<span><c:out value="${product.key.price}"/>RON</span>
 			                       			</span>
 		                   				</span>
 		               				 </span>
@@ -162,26 +165,69 @@
     		<div class="col-md-3">
                 <p class="lead">Noi avem</p>
                 
-         		<!-- Aducem subcategoriile in functie de ID-ul categoriei 
-         			 pretty incurcat, pentru ca se alterneaza cod Java cu tag-uri HTML-->
-    			 <%
-    			 	for (String category : index.getAllCategories()) {
-    			 %>
-    			 	<div class="list-group">
-    			 	<a href="#" class="list-group-item category"><strong> <%=category%> </strong></a>
-    			 	
-    			 	<%
-    			 		for (String subcategory : index.getSubcategoriesByCategoryName(category)) {
-    			 	%>
-    			 		<a href="#" class="list-group-item subcategory"> <%=subcategory%> </a>
-    			 	<%
-    			 		}
-    			 	%>
-    			 	</div>
-    			 <%
-    			 	}
-    			 %>
+         		<c:forEach items="${index.getAllCategories()}" var="category">
+    			 		<div class="list-group">
+    			 		<a href="#" class="list-group-item category"><strong> <c:out value="${category}"/> </strong></a>
+    			 			<c:forEach items="${index.getSubcategoriesByCategoryName(category)}" var="subcategory">
+    			 					<a href="#" class="list-group-item category"> <c:out value="${subcategory}"/></a>		 				
+    			 			</c:forEach>
+    			 		</div>		
+					</c:forEach>	
+					
+					<div id="filter-panel" class="collapse filter-panel">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label class="filter-col" style="margin-right:0;" for="pref-perpage">Rows per page:</label>
+                            <select id="pref-perpage" class="form-control">
+                                <option selected="selected" value="10">10</option>
+                                <option value="15">30</option>
+                                <option value="50">50</option>
+                            </select>                                
+                        </div> <!-- form group [rows] -->
+                        <div class="form-group">
+                            <label class="filter-col" style="margin-right:0;" for="pref-search">Search:</label>
+                            <input type="text" class="form-control input-sm" id="pref-search">
+                        </div><!-- form group [search] -->
+                        <div class="form-group">
+                            <label class="filter-col" style="margin-right:0;" for="pref-orderby">Sort:</label>
+                            <select id="pref-orderby" class="form-control">
+                                <option>Please Select </option>
+                                <option>Price (Low to High)</option>
+                                <option>Price (High to Low)</option>
+                            </select>                                
+                        </div> <!-- form group [order by] --> 
+                         <div class="form-group" id="filters">
+                        	<label class="filter-col" style="margin-right:0;">Categories</label>   
+                            <div class="filter-attributes" style="margin-left:10px; margin-right:10px;">
+								<c:forEach items="${index.getAllCategories()}" var="category">
+								<p> <label><input type="checkbox" name="category" id='<c:out value="${category}"/>' value ='<c:out value="${category}"/>'> <c:out value="${category}"/></label></p>
+								</c:forEach>
+                            </div>   
+                              <label class="filter-col" style="margin-right:0;">Subcategories</label>   
+                            <div class="filter-attributes" style="margin-left:10px; margin-right:10px;">
+								<c:forEach items="${index.getAllSubcategories()}" var="subcategory">
+								<p> <label><input type="checkbox" name="subcategory" id='<c:out value="${subcategory}"/>' value ='<c:out value="${subcategory}"/>'> <c:out value="${subcategory}"/></label></p>
+								</c:forEach>
+                            </div>           
+                        </div> 
+                        <div class="form-group">    
+                            <button type="submit" class="btn btn-default filter-col">
+                                <span class="glyphicon glyphicon-record"></span> Save Settings
+                            </button>  
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>    
+        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+            <span class="glyphicon glyphicon-cog"></span> Advanced Search
+        </button>
     		</div>
+            
+ 
+            
             
             <div class="col-md-9">
             	<!-- Un exemplu a ce va ofera Bootstrap - carusel cu imagini (in cazul meu, am luat imaginile de pe net :-)
@@ -194,7 +240,7 @@
                                 <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                                 <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                             </ol>
-                            <div class="carousel-inner">
+                            <div class="carousel-inner" style="height:150px;">
                                 <div class="item active">
                                     <img class="slide-image" src="https://andyfood.com/wp-content/uploads/2015/07/Grilled-Fruit-Sangria-800x300.jpg" alt="">
                                 </div>
@@ -215,37 +261,49 @@
                     </div>
                 </div>
                  
+                 
+	
+ 
                	<div class="row">
                 
                 	<%
 						for (ProductDTO prod : index.getAllProducts()) {
 					%>
 					<!-- clase responsive din Bootstrap -->
-                	<div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
+					<div class="products" data-category='<%=prod.getCategory()%>' data-subcategory='<%=prod.getSubcategory()%>'>
+                	<div class="col-sm-4 col-lg-4 col-md-4" >
+                	<ul>
+                        <li class="thumbnail" >
 	                            <img name="img" src="<%=prod.getImagePath() %>"  style="width: 200px; height: 200px" class="img-circle" alt=""> <!-- prod.getImage(), daca aveti -->
 	                            <div class="caption">
-	                                <h4 name="price" class="pull-right"><%=prod.getPrice()%> RON</h4> <!-- prod.getPrice(), daca aveti implementat -->
-	                                <h4 name="name"><%= prod.getName() %></h4>                   
-	                                <p><strong>Categorie:</strong> <%= prod.getCategory() %></p>
-	                                <p><strong>Subcategorie:</strong> <%= prod.getSubcategory() %></p>
-	                                <p name="description"><%=prod.getDescription() %></p> <!-- prod.getDescription(), daca aveti implementat -->
+	                            	<ul >
+	                                <li  ><%=prod.getPrice()%> RON</li> <!-- prod.getPrice(), daca aveti implementat -->
+	                                <li  ><%= prod.getName() %></li>                   
+	                                <li ><strong>Categorie:</strong> <%= prod.getCategory() %></li>
+	                                <li ><strong>Subcategorie:</strong> <%= prod.getSubcategory() %></li>                                
+	                                <li ><%=prod.getDescription() %> </li>
+	                                <li ><strong>Cantitate:</strong><%=prod.getQuantity() %></li>
+	                                </ul>
+	                               
 	                            </div>
-	                         	<input  type="submit" onClick="location.href='AddToCartServlet?action=add&name=<%=prod.getName() %>&price=<%=prod.getPrice() %>&img=<%=prod.getImagePath() %>&description=<%=prod.getDescription()%>&img=<%=prod.getImagePath() %>'"  class="btn btn-success btn-block" value='Adauga'>    
-                        </div>
+	                         	<input  type="submit"  onClick="location.href='ShoppingCart?action=add&id=<%=prod.getProductId()%>'"  class="btn btn-success btn-block" value='Adauga'>    
+                    	</li>
+                    </ul>
                     </div>
+                       </div> 
                     <%	
 						}
                     %>
                     
-                </div>        
+               
+                </div>     
             	
             </div>
     	</div>
     </div>
-		
-	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    
+    
+
 <script>
   window.fbAsyncInit = function() {
     FB.init({

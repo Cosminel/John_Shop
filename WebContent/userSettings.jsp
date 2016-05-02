@@ -63,17 +63,17 @@
 	                </li>
 	                
 			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> ${fn:length(products) }- Items<span class="caret"></span></a>
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> ${fn:length(shoppingcart) }- Items<span class="caret"></span></a>
 			          <ul class="dropdown-menu dropdown-cart" role="menu">
 			           <div class="col-lg-12 ">
 			              <c:forEach items="${shoppingcart}" var="product">
 			              <li>
 			                  <span class="item">
 			                    <span class="item-left">
-			                        <img src="<c:out value="${product.imagePath }"/>" class="img-responsive"  width="50" height="50" alt="" />
+			                        <img src="<c:out value="${product.key.imagePath }"/>" class="img-responsive"  width="50" height="50" alt="" />
 			                        <span class="item-info">
-			                            <span><c:out value="${product.name}" /></span>
-			                            <span><c:out value="${product.price}"/>RON</span>
+			                            <span><c:out value="${product.key.name}" /></span>
+			                            <span><c:out value="${product.key.price}"/>RON</span>
 			                        </span>
 			                    </span>
 			                    <span class="item-right">

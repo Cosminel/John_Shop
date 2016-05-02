@@ -8,6 +8,8 @@ public class ProductDTO {
 	private String subcategory;
 	private float price;
 	private String imagePath;
+	private int productId;
+	private int quantity;
 
 	public String getImagePath() {
 		return imagePath;
@@ -107,6 +109,22 @@ public class ProductDTO {
 		} else if (!subcategory.equals(other.subcategory))
 			return false;
 		return true;
+	}
+
+	public int getProductId() {
+		return productId;
+	}
+
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 }

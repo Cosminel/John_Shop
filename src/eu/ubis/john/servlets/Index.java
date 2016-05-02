@@ -32,12 +32,11 @@ public class Index extends HttpServlet {
 
 	private static OrdersFacade ordersFacade = FacadeFactory.getOrderFacade();
 	
-	private static UserFacade userFacade = FacadeFactory.getUserFacade();
-	
-	
-
 	public List<ProductDTO> getAllProducts() {
 		return productFacade.getAllProducts();
+	}
+	public List<String> getAllSubcategories() {
+		return productFacade.getAllSubcategories();
 	}
 	
 	public List<String> getAllCategories() {

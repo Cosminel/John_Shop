@@ -11,6 +11,8 @@ public interface ProductFacade {
 	public List<String> getAllSubcategories();
 	
 	public List<String> getSubcategoriesByCategoryName(String categoryName);
+	
+	public ProductDTO getProductbyId(int ProductId);
 
 	public void saveProduct(ProductDTO product);
 

@@ -47,4 +47,9 @@ public class ProductFacadeBean implements ProductFacade {
 
 	}
 
+	@Override
+	public ProductDTO getProductbyId(int productId) {
+		return productRepository.getProductbyId(productId);
+	}
+
 }

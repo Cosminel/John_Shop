@@ -25,27 +25,34 @@
 						</tr>
 					</thead>
 					<tbody>
+					
 						<c:forEach items="${shoppingcart}" var="product">
+						<form action="ShoppingCart?action=refresh&id=<c:out value="${product.key.productId }"/>" method="post">
 							<tr>
+							
 								<td data-th="Product">
-									<div class="row">
-										<div class="col-sm-2 hidden-xs"><img src="<c:out value="${product.imagePath}"/>" alt="..." class="img-responsive"/></div>
+									<div class="row" >
+										<div class="col-sm-2 hidden-xs">
+											<img src="<c:out value="${product.key.imagePath}"/>"  class="img-responsive" style=" max-width: 85px;"/>
+										</div>
 										<div class="col-sm-10">
-											<h4 class="nomargin"><c:out value="${product.name }" /></h4>
-											<p><c:out value="${product.description}"/></p>
+											<h4 class="nomargin"><c:out value="${product.key.name }" /></h4>
+											<p><c:out value="${product.key.description}"/></p>
 										</div>
 									</div>
 								</td>
-								<td data-th="Price"><c:out value="${product.price }"/></td>
+								<td data-th="Price"><c:out value="${product.key.price }"/></td>
 								<td data-th="Quantity">
-									<input type="number" class="form-control text-center" value="1">
+									<input type="number" name="quantity"  min= "1" max="<c:out value="${product.key.quantity}"/>"  class="form-control text-center" value="${product.value }">
 								</td>
-								<td data-th="Subtotal" class="text-center"><c:out value="${product.price }"/></td>
+								<td data-th="Subtotal" class="text-center"><fmt:formatNumber type="number" value="${product.key.price*product.value}"  pattern="####.######" /></td>
 								<td class="actions" data-th="">
-									<button class="btn btn-info btn-sm"'"><i class="fa fa-refresh"></i></button>
-									<button class="btn btn-danger btn-sm"  onClick="location.href='AddToCartServlet?action=remove&name=<c:out value="${product.name }"/>'"><i class="fa fa-trash-o"></i>Sterge</button>								
+									<button class="btn btn-info btn-sm" type="submit" ><i class="fa fa-refresh"></i></button>
+									<button class="btn btn-danger btn-sm" type="button"  onClick="location.href='ShoppingCart?action=remove&id=<c:out value="${product.key.productId }"/>'"><i class="fa fa-trash-o"></i>Sterge</button>								
 								</td>
+						
 							</tr>
+							</form>
 						</c:forEach>
 					</tbody>
 					<tfoot>
@@ -55,10 +62,10 @@
 							<td class="hidden-xs text-center">
 							<strong>
 							<c:set var="total" value="0"/>
-							<c:forEach var="product" items="${products}">
-								<c:set var="total" value="${total+product.price }"/>
+							<c:forEach var="product" items="${shoppingcart}">
+								<c:set var="total" value="${total+product.key.price*product.value }"/>
 							</c:forEach>
-							<fmt:formatNumber type="number"   value="${total}" pattern="####.######"/>
+							<fmt:formatNumber type="number" value="${total}" pattern="####.######"/>
 							<!--<c:out value="${total }"/>-->
 							RON
 							</strong>
@@ -67,6 +74,11 @@
 						</tr>
 					</tfoot>
 				</table>
+				<c:if test="${user==null }">	           
+					<div class="alert alert-danger">
+	 					 <strong>Atentie!</strong> Trebuie sa fii logat pentru a plasa o comanda.
+					</div>
+				</c:if>
 </div>
 </body>
 </html>
