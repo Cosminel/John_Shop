@@ -2,21 +2,21 @@ package eu.ubis.eshop.bf.domain.model;
 
 import eu.ubis.eshop.bfcl.ProductDTO;
 
-public class Transformer {
+public class ProductTransformer {
 
-	private Transformer() {
+	private ProductTransformer() {
 	}
 
-	public static Product dtoToModel(ProductDTO dto) {
+	public static Product dtoToModel(ProductDTO product) {
 		Product model = new Product();
-		model.setName(dto.getName());
-		model.setDescription(dto.getDescription());
-		model.setPrice(dto.getPrice());
-		model.setCategory(dto.getCategory());
-		model.setSubcategory(dto.getSubcategory());
-		model.setImagePath(dto.getImagePath());
-		model.setProductId(dto.getProductId());
-		model.setQuantity(dto.getQuantity());
+		model.setName(product.getName());
+		model.setDescription(product.getDescription());
+		model.setPrice(product.getPrice());
+		model.setCategory(product.getCategory());
+		model.setSubcategory(product.getSubcategory());
+		model.setImagePath(product.getImagePath());
+		model.setProductId(product.getProductId());
+		model.setQuantity(product.getQuantity());
 		return model;
 	}
 

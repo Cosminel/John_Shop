@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ import eu.ubis.eshop.bfcl.ProductFacade;
 /**
  * Servlet implementation class Admin
  */
-@WebServlet(name = "AdminServlet", urlPatterns = { "/AdminServlet" })
+@WebServlet("/AdminServlet")
 public class Admin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static ProductFacade productFacade = FacadeFactory.getProductFacade();  
@@ -35,11 +36,23 @@ public class Admin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		if (action.equals("getProducts")) {
-			redirectToProductsPage(request, response);
+			showProducts(request, response);
+		}
+		if(action.equals("removeProduct"))
+		{
+			removeProduct(request,response);
 		}
 	}
 
-	private void redirectToProductsPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void removeProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String id = request.getParameter("id");
+		int intId = Integer.parseInt(id);
+		productFacade.deleteProduct(intId);
+		showProducts(request, response);
+		
+	}
+
+	private void showProducts(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		HttpSession session = request.getSession();
 
@@ -59,7 +72,33 @@ public class Admin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("action");
 
+		if (action.equals("addProduct")) {
+			addProduct(request, response);
+			return;
+		}
+		
+
+		showProducts(request, response);
+	}
+	private void addProduct(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String productName = request.getParameter("name");
+		String productDescription = request.getParameter("description");
+		String productCategory = request.getParameter("category");
+		String productSubcategory = request.getParameter("subcategory");
+		String productPrice = request.getParameter("price");
+
+		ProductDTO product = new ProductDTO();
+		product.setName(productName);
+		product.setDescription(productDescription);
+		product.setCategory(productCategory);
+		product.setSubcategory(productSubcategory);
+		product.setPrice(Float.parseFloat(productPrice));
+
+		productFacade.saveProduct(product);
+		showProducts(request, response);
 	}
 
 }

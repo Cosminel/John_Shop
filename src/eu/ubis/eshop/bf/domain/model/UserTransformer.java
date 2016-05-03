@@ -11,6 +11,7 @@ public final class UserTransformer {
 	public static UserDTO modelToDTO(User model)
 	{
 		UserDTO dto = new UserDTO();
+		dto.setId(model.getId());
 		dto.setAddress(model.getAddress());
 		dto.setEmail(model.getEmail());
 		dto.setFirstName(model.getFirstName());
@@ -24,6 +25,7 @@ public final class UserTransformer {
 	public static User dtoToModel (UserDTO dto)
 	{
 		User model = new User();
+		model.setId(dto.getId());
 		model.setAddress(dto.getAddress());
 		model.setEmail(dto.getEmail());
 		model.setFirstName(dto.getFirstName());

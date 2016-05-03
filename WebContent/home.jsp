@@ -2,13 +2,14 @@
     pageEncoding="ISO-8859-1"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+    <%@ page import="eu.ubis.eshop.bfcl.ProductDTO"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>John's shop</title>
-	
+	<script  src="js/product_filter.js"></script>	
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/shop-homepage.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
@@ -59,6 +60,7 @@
 		               				<a class="text-center" href="AdminServlet?action=getProducts">Admin Panel</a>
 		               			 </li>
 	               			 </c:if>
+	               			 <li><a class="text-center" href="userOrders.jsp">My Orders</a>
 	               			<li>
 	                			<form action="<%=response.encodeURL("LogoutServlet") %>"  method="post">
                     				<button type="submit" class="btn btn-default center-block">LogOut</button>
@@ -103,22 +105,101 @@
         
     </nav>
 <!-- ------------------------------------------------------------------------ --> 
-
 	<div class="container">
-		<div class="row">	
+    	<div class="row">
     		<div class="col-md-3">
-    				<p></p>
-					<c:forEach items="${index.getAllCategories()}" var="item">
+                <p class="lead">Noi avem</p>
+                
+         		<c:forEach items="${index.getAllCategories()}" var="category">
     			 		<div class="list-group">
-    			 		<a href="#" class="list-group-item category"><strong> <c:out value="${item}"/> </strong></a>
-    			 			<c:forEach items="${index.getSubcategoriesByCategoryName(item)}" var="subcategory">
+    			 		<a href="#" class="list-group-item category"><strong> <c:out value="${category}"/> </strong></a>
+    			 			<c:forEach items="${index.getSubcategoriesByCategoryName(category)}" var="subcategory">
     			 					<a href="#" class="list-group-item category"> <c:out value="${subcategory}"/></a>		 				
     			 			</c:forEach>
     			 		</div>		
 					</c:forEach>	
-    		</div>    	
-    	</div>
-	</div>
+				<!--  Meniu pentru filtrare produse -->	
+					<div id="filter-panel" class="collapse filter-panel">
+			            <div class="panel panel-default">
+			                <div class="panel-body">
+			                    <form class="form-inline" role="form">
+			                        <div class="form-group">
+			                            <label class="filter-col" style="margin-right:0;" for="pref-perpage">Rows per page:</label>
+			                            <select id="pref-perpage" class="form-control">
+			                                <option selected="selected" value="10">10</option>
+			                                <option value="15">30</option>
+			                                <option value="50">50</option>
+			                            </select>                                
+			                        </div> <!-- form group [rows] -->
+			                       
+			                        <div class="form-group">
+			                            <label class="filter-col" style="margin-right:0;" for="pref-orderby">Sort:</label>
+			                            <select id="pref-orderby" class="form-control">
+			                                <option>Please Select </option>
+			                                <option>Price (Low to High)</option>
+			                                <option>Price (High to Low)</option>
+			                            </select>                                
+			                        </div> <!-- form group [order by] --> 
+			                         <div class="form-group" id="filters">
+			                        	<label class="filter-col" style="margin-right:0;">Categories</label>   
+			                            <div class="filter-attributes" style="margin-left:10px; margin-right:10px;">
+											<c:forEach items="${index.getAllCategories()}" var="category">
+											<p> <label><input type="checkbox" name="category" id='<c:out value="${category}"/>' value ='<c:out value="${category}"/>'> <c:out value="${category}"/></label></p>
+											</c:forEach>
+			                            </div>   
+			                              <label class="filter-col" style="margin-right:0;">Subcategories</label>   
+			                            <div class="filter-attributes" style="margin-left:10px; margin-right:10px;">
+											<c:forEach items="${index.getAllSubcategories()}" var="subcategory">
+											<p> <label><input type="checkbox" name="subcategory" id='<c:out value="${subcategory}"/>' value ='<c:out value="${subcategory}"/>'> <c:out value="${subcategory}"/></label></p>
+											</c:forEach>
+			                            </div>           
+			                        </div> 
+			                    </form>
+			                </div>
+			            </div>
+			        </div>    
+			        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+			            <span class="glyphicon glyphicon-cog"></span> Advanced Search
+			        </button>
+    		</div>
+    		 
+    		 <div class="col-md-9">
+    				 <!--  Grid de produse -->
+               	<div class="row">
+                	<%
+						for (ProductDTO prod : index.getAllProducts()) {
+					%>
+					<!-- clase responsive din Bootstrap -->
+					<div class="products" data-category='<%=prod.getCategory()%>' data-subcategory='<%=prod.getSubcategory()%>'>
+                	<div class="col-sm-4 col-lg-4 col-md-4" >
+                	<ul>
+                        <li class="thumbnail" >
+	                            <img name="img" src="<%=prod.getImagePath() %>"  style="width: 200px; height: 200px" class="img-circle" alt=""> <!-- prod.getImage(), daca aveti -->
+	                            <div class="caption">
+	                            	<ul >
+	                                <h4 class="pull-right" ><%=prod.getPrice()%> RON</h4> <!-- prod.getPrice(), daca aveti implementat -->
+	                                <li  ><%= prod.getName() %></li>                   
+	                                <li ><strong>Categorie:</strong> <%= prod.getCategory() %></li>
+	                                <li ><strong>Subcategorie:</strong> <%= prod.getSubcategory() %></li>                                
+	                                <li ><%=prod.getDescription() %> </li>
+	                                <li ><strong>Cantitate:</strong><%=prod.getQuantity() %></li>
+	                                </ul>
+	                               
+	                            </div>
+	                         	<input  type="submit"  onClick="location.href='ShoppingCart?action=add&id=<%=prod.getProductId()%>'"  class="btn btn-success btn-block" value='Adauga'>    
+                    	</li>
+                    </ul>
+                    </div>
+                       </div> 
+                    <%	
+						}
+                    %> 
+                 </div>  
+               </div>
+        </div>
+     </div>
+           
+	
 </body>
 	
 </html>

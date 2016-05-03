@@ -11,5 +11,8 @@
 	<classpathentry kind="lib" path="C:/Users/Cosmin/Desktop/FiiPractic_UBIS/ojdbc7.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Cosmin/Desktop/FiiPractic_UBIS/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Cosmin/Desktop/FiiPractic_UBIS/javax.servlet.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mail_1.4.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javaee.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-io-2.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

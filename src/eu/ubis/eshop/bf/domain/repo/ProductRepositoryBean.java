@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.ubis.eshop.bf.domain.model.Product;
-import eu.ubis.eshop.bf.domain.model.Transformer;
-import eu.ubis.eshop.bf.integration.model.Mapper;
+import eu.ubis.eshop.bf.domain.model.ProductTransformer;
+import eu.ubis.eshop.bf.integration.model.ProductMapper;
 import eu.ubis.eshop.bf.integration.model.ProductEntity;
 import eu.ubis.eshop.bf.integration.repo.ProductDAOBean;
 import eu.ubis.eshop.bfcl.ProductDTO;
@@ -20,7 +20,7 @@ public class ProductRepositoryBean {
 
 		List<Product> productList = new ArrayList<Product>();
 		for (ProductEntity entity : allProducts) {
-			Product model = Mapper.entityToModel(entity);
+			Product model = ProductMapper.entityToModel(entity);
 
 			String category = productDAOBean.getCategoryById(entity.getCategory());
 			String subCategory = productDAOBean.getSubCategoryById(entity.getSubcategory());
@@ -45,7 +45,7 @@ public class ProductRepositoryBean {
 	}
 
 	public void saveProduct(Product product) {
-		ProductEntity entity = Mapper.modelToEnt(product);
+		ProductEntity entity = ProductMapper.modelToEnt(product);
 
 		// We need to retrieve the category id from database manually
 		int categoryId = productDAOBean.getCategoryIdByName(product.getCategory());
@@ -56,11 +56,16 @@ public class ProductRepositoryBean {
 		productDAOBean.addProduct(entity);
 	}
 	
+	public void deleteProduct(int id)
+	{
+		productDAOBean.deleteProduct(id);
+	}
+	
 	public ProductDTO getProductbyId(int productId) 
 	{
 		ProductEntity entity = productDAOBean.getProductbyId(productId);
-		Product model = Mapper.entityToModel(entity);
-		ProductDTO dto = Transformer.modelToDto(model);
+		Product model = ProductMapper.entityToModel(entity);
+		ProductDTO dto = ProductTransformer.modelToDto(model);
 		return dto;
 	}
 }

@@ -54,11 +54,13 @@
 		               				<a class="text-center" href="AdminServlet?action=getProducts">Admin Panel</a>
 		               			 </li>
 	               			 </c:if>
+	               			 <li><a class="text-center" href="userOrders.jsp">My Orders</a>
 	               			<li>
 	                			<form action="<%=response.encodeURL("LogoutServlet") %>"  method="post">
                     				<button type="submit" class="btn btn-default center-block">LogOut</button>
                 				</form>
-	               			 </li>	               		
+	               			 </li>
+
 	               		</ul>	
 	                </li>
 	                

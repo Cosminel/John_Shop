@@ -14,8 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import eu.ubis.eshop.bfcl.FacadeFactory;
+import eu.ubis.eshop.bfcl.OrderDTO;
+import eu.ubis.eshop.bfcl.OrdersFacade;
 import eu.ubis.eshop.bfcl.ProductDTO;
 import eu.ubis.eshop.bfcl.ProductFacade;
+import eu.ubis.eshop.bfcl.UserDTO;
 
 /**
  * Servlet implementation class AddToCart
@@ -24,6 +27,7 @@ import eu.ubis.eshop.bfcl.ProductFacade;
 public class ShoppingCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static ProductFacade productFacade = FacadeFactory.getProductFacade();
+	private static OrdersFacade orderFacade = FacadeFactory.getOrderFacade();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -46,8 +50,40 @@ public class ShoppingCart extends HttpServlet {
 		{
 			removeProduct(request,response);
 		}	
+		if	(action.equals("continue"))
+		{
+			continueAction(request,response);
+		}
 	
 	}
+	private void continueAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession();
+		String url;
+		Hashtable <ProductDTO,Integer> productList = (Hashtable<ProductDTO,Integer>)session.getAttribute("shoppingcart");
+		if(session.getAttribute("user")==null ||productList==null)
+			url=request.getContextPath()+"/shopping-cart.jsp";
+		else
+			{	
+				UserDTO user = (UserDTO)session.getAttribute("user");
+				OrderDTO order = new OrderDTO();
+				order.setUserId(user.getId());
+				List<ProductDTO> products = new ArrayList<ProductDTO>();
+				Enumeration<ProductDTO> enumeration = productList.keys();
+				while(enumeration.hasMoreElements())
+				{
+					ProductDTO aux = enumeration.nextElement();
+					aux.setQuantity(productList.get(aux));
+					products.add(aux);
+				}
+				order.setProducts(products);
+				orderFacade.addOrder(order);
+				session.setAttribute("comanda", 1);
+				url=request.getContextPath()+"/purchaseOrder.jsp";
+			}
+		response.sendRedirect(url);
+		
+	}
+
 	private void removeProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		Hashtable <ProductDTO,Integer> productList = new Hashtable <ProductDTO,Integer>();
@@ -63,7 +99,7 @@ public class ShoppingCart extends HttpServlet {
 		}
 
 		session.setAttribute("shoppingcart", productList);	
-		response.sendRedirect(request.getContextPath() + "/shopping-cart.jsp");
+		response.sendRedirect(request.getContextPath()+"/shopping-cart.jsp");
 	}
 	
 	private void addProduct(HttpServletRequest request, HttpServletResponse response) throws IOException 

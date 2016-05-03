@@ -15,5 +15,7 @@ public interface ProductFacade {
 	public ProductDTO getProductbyId(int ProductId);
 
 	public void saveProduct(ProductDTO product);
+	
+	public void deleteProduct(int id);
 
 }

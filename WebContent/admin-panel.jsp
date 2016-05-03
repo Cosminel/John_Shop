@@ -53,9 +53,10 @@
 	               			<li><a class="text-center" href="userSettings.jsp">Settings</a></li>
 	               			<c:if test="${user.role==1 }">
 		               			<li>
-		               				<a class="text-center" href="admin-panel.jsp">Admin Panel</a>
+		               				<a class="text-center" href="AdminServlet?action=getProducts">Admin Panel</a>
 		               			 </li>
 	               			 </c:if>
+	               			 <li><a class="text-center" href="userOrders.jsp">My Orders</a>
 	               			<li>
 	                			<form action="<%=response.encodeURL("LogoutServlet") %>"  method="post">
                     				<button type="submit" class="btn btn-default center-block">LogOut</button>
@@ -105,16 +106,16 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				
-				<form action="ProductsCRUDServlet?action=addProduct" method="post">
+				<form action="AdminServlet?action=addProduct" method="post">
 				
 					<div class="form-group">
 						<label for="name">Product name</label>
-						<input type="text" class="form-control" name="name" />
+						<input type="text" class="form-control" name="name"  required/>
 					</div>
 					
 					<div class="form-group">
 						<label for="description">Description</label>
-						<input type="text" class="form-control" name="description" />
+						<input type="text" class="form-control" name="description" required/>
 					</div>
 					
 					<div class="form-group">
@@ -129,7 +130,7 @@
 					
 					<div class="form-group">
 						<label for="subcategory">Subcategory</label>
-						<select class="form-control" name="subcategory">
+						<select class="form-control" name="subcategory" >
 							<c:forEach items="${subcategories}" var="subcategory">
 								<option value="${subcategory}" selected><c:out
 										value="${subcategory}" /></option>
@@ -139,7 +140,7 @@
 					
 					<div class="form-group">
 						<label for="price">Price</label>
-						<input type="number" min="0" class="form-control" name="price" />
+						<input type="number" min="0" class="form-control" name="price"  required/>
 					</div>
 									
 					<input class="btn btn-primary" type="submit" value="Submit">
@@ -160,6 +161,8 @@
 								<th>Produs</th>
 								<th>Categorie</th>								
 								<th>Subcategorie</th>
+								<th>Edit</th>
+								<th>Delete</th>
 							</tr>
 						</thead>
 							
@@ -169,6 +172,8 @@
 									<td><c:out value="${product.name}" /></td>
 									<td><c:out value="${product.category}" /></td>									
 									<td><c:out value="${product.subcategory}" /></td>
+									<td><button class="btn btn-primary btn-xs" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></td>
+									<td><button class="btn btn-danger btn-xs"  data-target="#delete"  onClick="location.href='AdminServlet?action=removeProduct&id=<c:out value="${product.productId}" />'"><span class="glyphicon glyphicon-trash"></span></button></td>
 								</tr>
 							</c:forEach>
 						</tbody>

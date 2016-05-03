@@ -2,9 +2,9 @@ package eu.ubis.eshop.bf.integration.model;
 
 import eu.ubis.eshop.bf.domain.model.Product;
 
-public final class Mapper {
+public final class ProductMapper {
 
-	private Mapper() {
+	private ProductMapper() {
 	}
 
 	public static Product entityToModel(ProductEntity entity) {

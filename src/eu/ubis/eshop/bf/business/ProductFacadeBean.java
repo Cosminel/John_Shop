@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.ubis.eshop.bf.domain.model.Product;
-import eu.ubis.eshop.bf.domain.model.Transformer;
+import eu.ubis.eshop.bf.domain.model.ProductTransformer;
 import eu.ubis.eshop.bf.domain.repo.ProductRepositoryBean;
 import eu.ubis.eshop.bfcl.ProductDTO;
 import eu.ubis.eshop.bfcl.ProductFacade;
@@ -19,7 +19,7 @@ public class ProductFacadeBean implements ProductFacade {
 		List<ProductDTO> productList = new ArrayList<ProductDTO>();
 
 		for (Product product : products) {
-			productList.add(Transformer.modelToDto(product));
+			productList.add(ProductTransformer.modelToDto(product));
 		}
 
 		return productList;
@@ -42,7 +42,7 @@ public class ProductFacadeBean implements ProductFacade {
 
 	@Override
 	public void saveProduct(ProductDTO dto) {
-		Product product = Transformer.dtoToModel(dto);
+		Product product = ProductTransformer.dtoToModel(dto);
 		productRepository.saveProduct(product);
 
 	}
@@ -50,6 +50,12 @@ public class ProductFacadeBean implements ProductFacade {
 	@Override
 	public ProductDTO getProductbyId(int productId) {
 		return productRepository.getProductbyId(productId);
+	}
+
+	@Override
+	public void deleteProduct(int id) {
+		productRepository.deleteProduct(id);
+		
 	}
 
 }

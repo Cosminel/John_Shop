@@ -1,7 +1,8 @@
 package eu.ubis.eshop.bfcl;
 
 public class UserDTO {
-
+	
+	private int id;
 	private String name;
 	private String firstName;
 	private String address;
@@ -52,6 +53,12 @@ public class UserDTO {
 	}
 	public void setRole(int role) {
 		this.role = role;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

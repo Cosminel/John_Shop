@@ -13,21 +13,20 @@ import javax.servlet.http.HttpSession;
 import eu.ubis.eshop.bfcl.FacadeFactory;
 import eu.ubis.eshop.bfcl.OrderDTO;
 import eu.ubis.eshop.bfcl.OrdersFacade;
+import eu.ubis.eshop.bfcl.ProductDTO;
 import eu.ubis.eshop.bfcl.UserDTO;
-import eu.ubis.eshop.bfcl.UserFacade;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class userOrders
  */
-@WebServlet("/LoginServlet")
-public class Login extends HttpServlet {
+@WebServlet("/userOrders")
+public class userOrders extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static UserFacade userFacade = FacadeFactory.getUserFacade();
 	private static OrdersFacade orderFacade  = FacadeFactory.getOrderFacade();
-	/**
+    /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public userOrders() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,34 +43,18 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action");
-		if (action.equals("login")) {
-			redirectToLoginPage(request, response);
-		}
-	}
-	
-	private void redirectToLoginPage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		String id = request.getParameter("id");
+		int idInt = Integer.parseInt(id) -1;
 
-		 String user=request.getParameter("username");    
-	     String pass=request.getParameter("password"); 
-	     userFacade.loginUser(user, pass);
-	     if (userFacade.getCurrentUser()!=null)
-	    	 {
-	    	 UserDTO currentUser = new UserDTO();
-	    	 currentUser = userFacade.getCurrentUser();
-	    	 List<OrderDTO> orders = orderFacade.getAllOrdersByUserId(currentUser.getId());
-	    	 session.setAttribute("user", currentUser);
-	    	 session.setAttribute("orders", orders);
-	    	 String encodedURL = response.encodeRedirectURL(request.getContextPath() + "/home.jsp");
-	    	 response.sendRedirect(encodedURL);
-	    	 }
-
-	     else 
-	     	{
-	    	 	response.sendRedirect("index.jsp");
-	     	}
+		List<OrderDTO> orders = (List<OrderDTO>)session.getAttribute("orders");
+		for (int i=0;i<orders.size();i++)
+		{
+			if (idInt==i)
+			{  
+				session.setAttribute("productsOrder", orders.get(i).getProducts());
+			}
+		}
 		
 		
 	}

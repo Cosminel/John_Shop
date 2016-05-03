@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.ubis.eshop.bf.integration.model.ProductEntity;
-import eu.ubis.eshop.bfcl.ProductDTO;
 
 public class ProductDAOBean {
 	private static final String GET_ALL_PRODUCTS = "SELECT * FROM product ORDER BY id";
@@ -24,7 +23,7 @@ public class ProductDAOBean {
 	
 	private static final String PRODUCT_INSERT = "INSERT INTO product ( category_id, subcategory_id, name, description, price, image_path,quantity) VALUES ( ?, ?, ?, ?, ?, '',?)";
 	private static final String GET_PRODUCT_BY_ID ="SELECT * FROM product WHERE id = ? ";
-
+	private static final String DELETE_PRODUCT_BY_ID="DELETE FROM Product WHERE id=?";
 
 	public List<ProductEntity> getAllProducts() {
 
@@ -215,5 +214,20 @@ public class ProductDAOBean {
 		}
 		return product;
 		}
+	
+	public void deleteProduct(int id)
+	{
+		Connection con = ConnectionHelperClass.getMysqlConnection();
+		PreparedStatement prepareStatement;
+		try {
+			prepareStatement = con.prepareStatement(DELETE_PRODUCT_BY_ID);
+			prepareStatement.setInt(1, id);
+			prepareStatement.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 }

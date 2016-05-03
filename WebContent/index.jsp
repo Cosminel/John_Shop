@@ -160,8 +160,6 @@
     
     <div class="container">
     	<div class="row">
-    	
-    		
     		<div class="col-md-3">
                 <p class="lead">Noi avem</p>
                 
@@ -173,61 +171,53 @@
     			 			</c:forEach>
     			 		</div>		
 					</c:forEach>	
-					
+				<!--  Meniu pentru filtrare produse -->	
 					<div id="filter-panel" class="collapse filter-panel">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <form class="form-inline" role="form">
-                        <div class="form-group">
-                            <label class="filter-col" style="margin-right:0;" for="pref-perpage">Rows per page:</label>
-                            <select id="pref-perpage" class="form-control">
-                                <option selected="selected" value="10">10</option>
-                                <option value="15">30</option>
-                                <option value="50">50</option>
-                            </select>                                
-                        </div> <!-- form group [rows] -->
-                        <div class="form-group">
-                            <label class="filter-col" style="margin-right:0;" for="pref-search">Search:</label>
-                            <input type="text" class="form-control input-sm" id="pref-search">
-                        </div><!-- form group [search] -->
-                        <div class="form-group">
-                            <label class="filter-col" style="margin-right:0;" for="pref-orderby">Sort:</label>
-                            <select id="pref-orderby" class="form-control">
-                                <option>Please Select </option>
-                                <option>Price (Low to High)</option>
-                                <option>Price (High to Low)</option>
-                            </select>                                
-                        </div> <!-- form group [order by] --> 
-                         <div class="form-group" id="filters">
-                        	<label class="filter-col" style="margin-right:0;">Categories</label>   
-                            <div class="filter-attributes" style="margin-left:10px; margin-right:10px;">
-								<c:forEach items="${index.getAllCategories()}" var="category">
-								<p> <label><input type="checkbox" name="category" id='<c:out value="${category}"/>' value ='<c:out value="${category}"/>'> <c:out value="${category}"/></label></p>
-								</c:forEach>
-                            </div>   
-                              <label class="filter-col" style="margin-right:0;">Subcategories</label>   
-                            <div class="filter-attributes" style="margin-left:10px; margin-right:10px;">
-								<c:forEach items="${index.getAllSubcategories()}" var="subcategory">
-								<p> <label><input type="checkbox" name="subcategory" id='<c:out value="${subcategory}"/>' value ='<c:out value="${subcategory}"/>'> <c:out value="${subcategory}"/></label></p>
-								</c:forEach>
-                            </div>           
-                        </div> 
-                        <div class="form-group">    
-                            <button type="submit" class="btn btn-default filter-col">
-                                <span class="glyphicon glyphicon-record"></span> Save Settings
-                            </button>  
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>    
-        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
-            <span class="glyphicon glyphicon-cog"></span> Advanced Search
-        </button>
+			            <div class="panel panel-default">
+			                <div class="panel-body">
+			                    <form class="form-inline" role="form">
+			                        <div class="form-group">
+			                            <label class="filter-col" style="margin-right:0;" for="pref-perpage">Rows per page:</label>
+			                            <select id="pref-perpage" class="form-control">
+			                                <option selected="selected" value="10">10</option>
+			                                <option value="15">30</option>
+			                                <option value="50">50</option>
+			                            </select>                                
+			                        </div> <!-- form group [rows] -->
+			                       
+			                        <div class="form-group">
+			                            <label class="filter-col" style="margin-right:0;" for="pref-orderby">Sort:</label>
+			                            <select id="pref-orderby" class="form-control">
+			                                <option>Please Select </option>
+			                                <option>Price (Low to High)</option>
+			                                <option>Price (High to Low)</option>
+			                            </select>                                
+			                        </div> <!-- form group [order by] --> 
+			                         <div class="form-group" id="filters">
+			                        	<label class="filter-col" style="margin-right:0;">Categories</label>   
+			                            <div class="filter-attributes" style="margin-left:10px; margin-right:10px;">
+											<c:forEach items="${index.getAllCategories()}" var="category">
+											<p> <label><input type="checkbox" name="category" id='<c:out value="${category}"/>' value ='<c:out value="${category}"/>'> <c:out value="${category}"/></label></p>
+											</c:forEach>
+			                            </div>   
+			                              <label class="filter-col" style="margin-right:0;">Subcategories</label>   
+			                            <div class="filter-attributes" style="margin-left:10px; margin-right:10px;">
+											<c:forEach items="${index.getAllSubcategories()}" var="subcategory">
+											<p> <label><input type="checkbox" name="subcategory" id='<c:out value="${subcategory}"/>' value ='<c:out value="${subcategory}"/>'> <c:out value="${subcategory}"/></label></p>
+											</c:forEach>
+			                            </div>           
+			                        </div> 
+			                    </form>
+			                </div>
+			            </div>
+			        </div>    
+			        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+			            <span class="glyphicon glyphicon-cog"></span> Advanced Search
+			        </button>
     		</div>
             
  
-            
+            <!-- Carusel-ul Ioanei -->
             
             <div class="col-md-9">
             	<!-- Un exemplu a ce va ofera Bootstrap - carusel cu imagini (in cazul meu, am luat imaginile de pe net :-)
@@ -260,10 +250,7 @@
                         </div>
                     </div>
                 </div>
-                 
-                 
-	
- 
+                 <!--  Grid de produse -->
                	<div class="row">
                 
                 	<%
@@ -277,7 +264,7 @@
 	                            <img name="img" src="<%=prod.getImagePath() %>"  style="width: 200px; height: 200px" class="img-circle" alt=""> <!-- prod.getImage(), daca aveti -->
 	                            <div class="caption">
 	                            	<ul >
-	                                <li  ><%=prod.getPrice()%> RON</li> <!-- prod.getPrice(), daca aveti implementat -->
+	                                <h4 class="pull-right" ><%=prod.getPrice()%> RON</h4> <!-- prod.getPrice(), daca aveti implementat -->
 	                                <li  ><%= prod.getName() %></li>                   
 	                                <li ><strong>Categorie:</strong> <%= prod.getCategory() %></li>
 	                                <li ><strong>Subcategorie:</strong> <%= prod.getSubcategory() %></li>                                
@@ -304,28 +291,6 @@
     
     
 
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1018181388255974',
-      xfbml      : true,
-      version    : 'v2.6'
-    });
-  };
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
-<div
-  class="fb-like"
-  data-share="true"
-  data-width="450"
-  data-show-faces="true">
-</div>
 </body>
 </html>

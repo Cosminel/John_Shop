@@ -2,14 +2,16 @@ package eu.ubis.eshop.pf;
 
 import java.util.List;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
 import eu.ubis.eshop.bf.domain.model.Product;
-import eu.ubis.eshop.bf.domain.repo.ShoppingCartRepositoryBean;
+import eu.ubis.eshop.bf.integration.model.OrdersEntity;
 import eu.ubis.eshop.bf.integration.model.ProductEntity;
 import eu.ubis.eshop.bf.integration.repo.ConnectionHelperClass;
+import eu.ubis.eshop.bf.integration.repo.OrdersDAOBean;
 import eu.ubis.eshop.bf.integration.repo.ProductDAOBean;
 import eu.ubis.eshop.bfcl.FacadeFactory;
 import eu.ubis.eshop.bfcl.OrdersFacade;
@@ -20,7 +22,7 @@ import eu.ubis.eshop.bfcl.UserFacade;
 
 public class Test1 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		System.out.println("salut");
 
 
@@ -64,10 +66,43 @@ public class Test1 {
 //			System.out.println(produs.getName());
 //		}
 //		
-		ProductFacade index = FacadeFactory.getProductFacade();
-		List<String> salut =index.getSubcategoriesByCategoryName("Fructe");
-		for(String s: salut)
-			System.out.println(s);
+//		ProductFacade index = FacadeFactory.getProductFacade();
+//		List<String> salut =index.getSubcategoriesByCategoryName("Fructe");
+//		for(String s: salut)
+//			System.out.println(s);
+		
+//		OrdersEntity entity = new OrdersEntity();
+//		entity.setUserId(1);
+//		ProductEntity prod = new ProductEntity();
+//		prod.setName("caciula");
+//		prod.setPrice(5);
+//		prod.setProductId(1);
+//		prod.setQuantity(2);
+//		prod.setImagePath("/link");
+//		prod.setDescription("un prods bun");
+//		List<ProductEntity> list = new ArrayList<ProductEntity>();
+//		list.add(prod);
+//		entity.setProducts(list);
+//		OrdersDAOBean bean = new OrdersDAOBean();
+//		try {
+//			bean.addOrder(entity);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		List<OrdersEntity> lista = new ArrayList<OrdersEntity>();
+		OrdersDAOBean bean = new OrdersDAOBean();
+		lista = bean.getAllOrdersByUserId(1);
+		for (OrdersEntity l : lista)
+		{
+			System.out.println(l.getUserId());
+			for (ProductEntity p :l.getProducts())
+			{
+				System.out.println(p.getName());
+			}
+		}
+		
 	}
 
 }

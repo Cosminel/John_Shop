@@ -11,6 +11,7 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/shop-homepage.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<script src="js/bootbox.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -65,20 +66,42 @@
 							<c:forEach var="product" items="${shoppingcart}">
 								<c:set var="total" value="${total+product.key.price*product.value }"/>
 							</c:forEach>
-							<fmt:formatNumber type="number" value="${total}" pattern="####.######"/>
-							<!--<c:out value="${total }"/>-->
-							RON
+							<fmt:formatNumber type="number" value="${total}" pattern="####.######"/> RON
 							</strong>
 							</td>
-							<td><a href="#" class="btn btn-success btn-block">Continua <i class="fa fa-angle-right"></i></a></td>
+							<td><a href="#" class="btn btn-success btn-block" type="button"  onClick="location.href='ShoppingCart?action=continue'">Comanda <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 				</table>
-				<c:if test="${user==null }">	           
-					<div class="alert alert-danger">
-	 					 <strong>Atentie!</strong> Trebuie sa fii logat pentru a plasa o comanda.
-					</div>
-				</c:if>
+				<div id="confirm" class="modal hide fade">
+				  <div class="modal-body">
+				    Are you sure?
+				  </div>
+				  <div class="modal-footer">
+				    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+				    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+				  </div>
+				</div>
+
+
+
+				<c:choose>
+					<c:when test="${user==null }">
+						<div class="alert alert-danger">
+	 					 	<strong>Atentie!</strong> Trebuie sa fii logat pentru a plasa o comanda.
+						</div>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${(user.address==null) || (user.name==null) || (user.firstName==null) }">	           
+						<div class="alert alert-warning">
+	 					 	<strong>Atentie!</strong> Trebuie completate campurile First Name/Last Name/Address.Completati <a href="./userSettings.jsp">Aici</a>
+						</div>
+						</c:if>
+				</c:otherwise>
+				</c:choose>
+				
+				
 </div>
 </body>
+
 </html>
