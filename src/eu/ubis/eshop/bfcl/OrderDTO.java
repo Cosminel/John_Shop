@@ -41,5 +41,6 @@ public class OrderDTO {
 	}
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
+		System.out.println("dasda");
 	}
 }
